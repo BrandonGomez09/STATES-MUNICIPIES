@@ -1,36 +1,25 @@
-import { Client } from 'pg';
-import 'dotenv/config';
+import { dbClient } from './data-source'; 
 
-const client = new Client({
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: 'postgres', 
-  ssl: {
-    rejectUnauthorized: false
-  },
-});
+async function checkDatabaseConnection() {
+  const dbName = dbClient.database; 
 
-async function createDB() {
   try {
-    await client.connect();
-    console.log("Conectado a AWS RDS. Verificando si existe la base de datos...");
+    console.log(`Verificando conexión a la base de datos: '${dbName}'...`);
+    
+    await dbClient.connect(); 
+    
+    const res = await dbClient.query('SELECT NOW() as now');
+    
+    console.log(`¡Conexión EXITOSA a la base de datos '${dbName}'!`);
+    console.log(` Hora del servidor DB: ${res.rows[0].now}`);
 
-    const dbName = process.env.DB_NAME || 'db_estados';
-
-    await client.query(`CREATE DATABASE "${dbName}";`);
-    console.log(`¡Base de datos '${dbName}' creada con éxito!`);
-
-  } catch (err: any) {
-    if (err.code === '42P04') {
-      console.log(`La base de datos ya existía. (Se omite creación)`);
-    } else {
-      console.error("Error crítico al crear la base de datos:", err);
-    }
+  } catch (err) {
+    console.error(`Error CRÍTICO: No se pudo conectar a la base de datos '${dbName}'.`);
+    console.error("   Detalles:", err);
+    process.exit(1);
   } finally {
-    await client.end();
+    await dbClient.end();
   }
 }
 
-createDB();
+checkDatabaseConnection();
