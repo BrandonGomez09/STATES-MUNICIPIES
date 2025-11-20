@@ -14,13 +14,12 @@ export class TypeORMMunicipalityRepository implements IMunicipalityRepository {
     const skip = (page - 1) * take;
     const whereClause = { state_id: stateId };
 
-    // Ejecutamos 'findAndCount' con la condición 'where'
     const [entities, totalItems] = await this.municipalityRepo.findAndCount({
       where: whereClause,
       take: take,
       skip: skip,
       order: {
-        name: 'ASC' // Ordenamos por nombre
+        name: 'ASC' 
       }
     });
 
