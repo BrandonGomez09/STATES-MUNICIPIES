@@ -1,7 +1,0 @@
-# Ignorar la carpeta de módulos de Node
-node_modules
-
-# Ignorar la carpeta de datos de Postgres (no la necesitamos en la API)
-postgres-data
-
-.env

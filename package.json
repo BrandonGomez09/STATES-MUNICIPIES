@@ -7,7 +7,8 @@
     "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/server.js",
     "build": "tsc",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
-    "seed": "ts-node-dev -r tsconfig-paths/register src/seed.ts"
+    "seed": "ts-node-dev -r tsconfig-paths/register src/seed.ts",
+    "db:create": "ts-node create-db.ts"
   },
   "keywords": [],
   "author": "",
