@@ -7,11 +7,10 @@ import { stateController } from '@infrastructure/api/dependencies/dependencies';
 export const createApp = (): Application => {
   const app: Application = express();
 
-  // Middlewares
+
   app.use(cors()); 
   app.use(express.json()); 
 
-  // Rutas
   app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'OK', message: 'Servicio de estados funcionando' });
   });

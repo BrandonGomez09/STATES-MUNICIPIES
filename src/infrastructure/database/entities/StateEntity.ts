@@ -4,7 +4,6 @@ import { MunicipalityEntity } from "./MunicipalityEntity";
 @Entity('states')
 export class StateEntity {
 
-  // @PrimaryGeneratedColumn define la llave primaria (id) y la hace autoincremental.
   @PrimaryGeneratedColumn()
   id!: number;
 

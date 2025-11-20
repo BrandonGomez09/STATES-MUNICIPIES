@@ -42,23 +42,19 @@ const data = [
 
 async function seedDatabase() {
   try {
-    // 1. Inicializar la conexión
     await AppDataSource.initialize();
     console.log('Conexión de sembrado iniciada.');
 
-    // 2. Obtener los repositorios
     const stateRepository = AppDataSource.getRepository(StateEntity);
     const municipalityRepository = AppDataSource.getRepository(MunicipalityEntity);
 
-    // 3. Limpiar tablas (en orden: hijos primero)
     console.log('Limpiando base de datos...');
     await municipalityRepository.query('TRUNCATE TABLE "municipalities" RESTART IDENTITY CASCADE');
     await stateRepository.query('TRUNCATE TABLE "states" RESTART IDENTITY CASCADE');
 
-    // 4. Insertar datos
     console.log('Insertando 32 estados y 160 municipios...');
     for (const stateData of data) {
-      // Creamos el estado
+      
       const state = new StateEntity();
       state.id = stateData.id;
       state.name = stateData.name;
