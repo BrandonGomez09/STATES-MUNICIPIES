@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  states-service:
+    build: .
+    container_name: states-service
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "4002:4002"
