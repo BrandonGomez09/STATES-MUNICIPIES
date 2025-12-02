@@ -4,7 +4,6 @@ import { AppDataSource } from "./config/data-source";
 import { StateEntity } from "./infrastructure/database/entities/StateEntity";
 import { MunicipalityEntity } from "./infrastructure/database/entities/MunicipalityEntity";
 
-// La lista completa de 32 estados y sus 5 municipios
 const data = [
   { id: 1, name: 'Aguascalientes', municipalities: ['Aguascalientes', 'Jesús María', 'Calvillo', 'Rincón de Romos', 'Pabellón de Arteaga'] },
   { id: 2, name: 'Baja California', municipalities: ['Tijuana', 'Mexicali', 'Ensenada', 'Playas de Rosarito', 'Tecate'] },
@@ -60,11 +59,10 @@ async function seedDatabase() {
       state.name = stateData.name;
       await stateRepository.save(state);
 
-      // Creamos los municipios para este estado
       const municipalities = stateData.municipalities.map(munName => {
         const municipality = new MunicipalityEntity();
         municipality.name = munName;
-        municipality.state = state; // TypeORM maneja la relación state_id
+        municipality.state = state;
         return municipality;
       });
       await municipalityRepository.save(municipalities);
