@@ -34,11 +34,10 @@ export class TypeORMStateRepository implements IStateRepository {
   }
 
   async findById(id: number): Promise<State | null> {
-    // findOne es la forma de TypeORM de buscar por ID u otra condición única
     const entity = await this.stateRepo.findOne({
       where: { id: id }
     });
 
-    return entity; // Devuelve la entidad o 'null' si no se encuentra
+    return entity; 
   }
 }
